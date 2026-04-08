@@ -25,6 +25,12 @@ public sealed class ShipmentService : IShipmentService
             throw new KeyNotFoundException("Shipment not found.");
         }
 
+        if (string.Equals(shipment.Status, "RECEIVED", StringComparison.OrdinalIgnoreCase)
+            || shipment.DateReceived is not null)
+        {
+            throw new ShipmentAlreadyReceivedException("Shipment has already been received.");
+        }
+
         var expectedMap = shipment.ItemShipments
             .Where(i => i.ItemId.HasValue)
             .ToDictionary(i => i.ItemId!.Value, i => i);
@@ -77,6 +83,7 @@ public sealed class ShipmentService : IShipmentService
         }
 
         shipment.DateReceived = DateTime.UtcNow;
+        shipment.Status = "RECEIVED";
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         return new ReceiveShipmentResponse(shipment.Id, shipment.DateReceived, responseItems);
@@ -86,6 +93,14 @@ public sealed class ShipmentService : IShipmentService
 internal sealed class ShipmentValidationException : Exception
 {
     public ShipmentValidationException(string message)
+        : base(message)
+    {
+    }
+}
+
+internal sealed class ShipmentAlreadyReceivedException : Exception
+{
+    public ShipmentAlreadyReceivedException(string message)
         : base(message)
     {
     }

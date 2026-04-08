@@ -19,6 +19,10 @@ public partial class Shipment
     [Column("date_received", TypeName = "timestamp without time zone")]
     public DateTime? DateReceived { get; set; }
 
+    [Column("status")]
+    [StringLength(20)]
+    public string? Status { get; set; }
+
     [Column("price_adjust")]
     [Precision(10, 2)]
     public decimal? PriceAdjust { get; set; }

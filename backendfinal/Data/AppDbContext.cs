@@ -129,6 +129,8 @@ public partial class AppDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("shipment_pkey");
 
             entity.HasOne(d => d.Order).WithMany(p => p.Shipments).HasConstraintName("order_id_fk");
+
+            entity.Property(e => e.Status).HasMaxLength(20);
         });
 
         modelBuilder.Entity<ShipmentAction>(entity =>

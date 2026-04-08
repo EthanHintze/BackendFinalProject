@@ -33,6 +33,10 @@ public class ShipmentsController : ControllerBase
         {
             return NotFound(new { Message = "Shipment not found." });
         }
+        catch (ShipmentAlreadyReceivedException)
+        {
+            return Conflict(new { Message = "Shipment has already been received." });
+        }
         catch (ShipmentValidationException ex)
         {
             var errors = new ModelStateDictionary();
