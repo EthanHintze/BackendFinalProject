@@ -16,6 +16,10 @@ public partial class PurchaseOrder
     [Column("date_ordered", TypeName = "timestamp without time zone")]
     public DateTime? DateOrdered { get; set; }
 
+    [Column("status")]
+    [StringLength(20)]
+    public string? Status { get; set; }
+
     [InverseProperty("Order")]
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 

@@ -18,8 +18,18 @@ public sealed class PurchaseOrderService : IPurchaseOrderService
     {
         var purchaseOrder = new PurchaseOrder
         {
-            DateOrdered = request.DateOrdered
+            DateOrdered = request.DateOrdered!.Value,
+            Status = "CREATED"
         };
+
+        foreach (var itemRequest in request.Items)
+        {
+            purchaseOrder.OrderItems.Add(new OrderItem
+            {
+                ItemId = itemRequest.ProductId,
+                Quantity = itemRequest.Quantity
+            });
+        }
 
         _dbContext.PurchaseOrders.Add(purchaseOrder);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -29,6 +39,8 @@ public sealed class PurchaseOrderService : IPurchaseOrderService
 
     public async Task<PurchaseOrder?> GetPurchaseOrderByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await _dbContext.PurchaseOrders.FindAsync(new object[] { id }, cancellationToken);
+        return await _dbContext.PurchaseOrders
+            .Include(p => p.OrderItems)
+            .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
     }
 }

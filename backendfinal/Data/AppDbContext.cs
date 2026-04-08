@@ -114,6 +114,7 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.Id).HasDefaultValueSql("nextval('warehouse.order_id_seq'::regclass)");
             entity.Property(e => e.DateOrdered).HasDefaultValueSql("now()");
+            entity.Property(e => e.Status).HasMaxLength(20);
         });
 
         modelBuilder.Entity<Shelf>(entity =>

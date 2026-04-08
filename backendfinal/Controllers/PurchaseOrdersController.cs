@@ -23,15 +23,14 @@ public class PurchaseOrdersController : ControllerBase
             return ValidationProblem(ModelState);
         }
 
-        if (request.DateOrdered > DateTime.UtcNow)
-        {
-            ModelState.AddModelError(nameof(request.DateOrdered), "DateOrdered cannot be in the future.");
-            return ValidationProblem(ModelState);
-        }
-
         var purchaseOrder = await _purchaseOrderService.CreatePurchaseOrderAsync(request);
 
-        var response = new PurchaseOrderResponse(purchaseOrder.Id, purchaseOrder.DateOrdered);
+        var response = new PurchaseOrderResponse(
+            purchaseOrder.Id,
+            purchaseOrder.DateOrdered,
+            purchaseOrder.Status,
+            purchaseOrder.OrderItems.Select(item => new PurchaseOrderItemResponse(item.ItemId ?? 0, item.Quantity ?? 0)).ToList());
+
         return CreatedAtAction(nameof(GetPurchaseOrderById), new { id = purchaseOrder.Id }, response);
     }
 
@@ -44,7 +43,12 @@ public class PurchaseOrdersController : ControllerBase
             return NotFound();
         }
 
-        var response = new PurchaseOrderResponse(purchaseOrder.Id, purchaseOrder.DateOrdered);
+        var response = new PurchaseOrderResponse(
+            purchaseOrder.Id,
+            purchaseOrder.DateOrdered,
+            purchaseOrder.Status,
+            purchaseOrder.OrderItems.Select(item => new PurchaseOrderItemResponse(item.ItemId ?? 0, item.Quantity ?? 0)).ToList());
+
         return Ok(response);
     }
 }
