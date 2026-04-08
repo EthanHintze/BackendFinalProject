@@ -17,9 +17,9 @@ public partial class Item
     [StringLength(50)]
     public string? ItemName { get; set; }
 
-    [Column("cost")]
+    [Column("price")]
     [Precision(10, 2)]
-    public decimal? Cost { get; set; }
+    public decimal? Price { get; set; }
 
     [Column("vendor_id")]
     public int? VendorId { get; set; }
