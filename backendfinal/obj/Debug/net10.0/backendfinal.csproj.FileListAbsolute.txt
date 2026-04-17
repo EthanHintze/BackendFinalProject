@@ -162,3 +162,5 @@ C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\bin\
 C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\obj\Debug\net10.0\backendfinal.sourcelink.json
+C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\bin\Debug\net10.0\BCrypt.Net-Next.dll
+C:\Users\offma\SchoolWork\Backend_Spring26\BackendFinalProject\backendfinal\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
